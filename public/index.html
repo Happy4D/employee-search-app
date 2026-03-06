@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="km">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ប្រព័ន្ធស្វែងរកព័ត៌មានបុគ្គលិក</title>
+
+  <!-- Khmer font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="container py-4">
+        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+          <div>
+            <h1 class="app-title mb-1">
+              <i class="bi bi-person-badge-fill me-2"></i>ប្រព័ន្ធស្វែងរកព័ត៌មានបុគ្គលិក
+            </h1>
+            <div class="app-subtitle">
+              ស្វែងរកតាម <b>ឈ្មោះ</b> ឬ <b>អត្តលេខ</b> ដើម្បីមើលព័ត៌មានលម្អិត
+            </div>
+          </div>
+
+          <div class="badge-meta">
+            <span class="badge rounded-pill text-bg-light shadow-sm">
+              <i class="bi bi-shield-check me-1"></i> Professional UI
+            </span>
+            <span class="badge rounded-pill text-bg-light shadow-sm">
+              <i class="bi bi-lightning-charge me-1"></i> Fast Search
+            </span>
+          </div>
+        </div>
+
+        <div class="search-card mt-4">
+          <div class="input-group input-group-lg">
+            <span class="input-group-text icon-pill">
+              <i class="bi bi-search"></i>
+            </span>
+            <input id="searchInput" type="text" class="form-control"
+              placeholder="វាយឈ្មោះ (គោន្តនាម-នាម) ឬ អត្តលេខ..."
+              autocomplete="off" />
+            <button id="clearBtn" class="btn btn-outline-light" type="button">
+              <i class="bi bi-x-lg me-1"></i>សម្អាត
+            </button>
+          </div>
+
+          <div id="hint" class="hint mt-2">
+            ឧ. «សុខា» ឬ «12345»
+          </div>
+
+          <div id="resultsBox" class="results-box mt-3 d-none">
+            <div class="results-header">
+              <div>
+                <i class="bi bi-list-check me-2"></i>
+                លទ្ធផលស្វែងរក
+              </div>
+              <div class="small opacity-75" id="resultCount">0</div>
+            </div>
+            <div id="resultsList" class="list-group list-group-flush"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container pb-5">
+      <div class="row g-4">
+        <div class="col-12 col-lg-5">
+          <div class="glass-panel">
+            <h5 class="section-title">
+              <i class="bi bi-person-vcard me-2"></i>ព័ត៌មានសង្ខេប
+            </h5>
+
+            <div id="emptyState" class="empty-state">
+              <div class="empty-emoji">🔎</div>
+              <div class="fw-semibold">ចាប់ផ្តើមស្វែងរក...</div>
+              <div class="small opacity-75">វាយឈ្មោះ ឬ អត្តលេខ នៅខាងលើ</div>
+            </div>
+
+            <div id="profile" class="d-none">
+              <div class="d-flex gap-3 align-items-center">
+                <div class="avatar-wrap">
+                  <img id="photo" class="avatar" src="images/default.png" alt="រូបភាព" />
+                </div>
+                <div class="flex-grow-1">
+                  <div class="name" id="empName">—</div>
+                  <div class="meta" id="empRole">—</div>
+
+                  <div class="mt-2 d-flex flex-wrap gap-2" id="badges">
+                    <!-- badges injected -->
+                  </div>
+                </div>
+              </div>
+
+              <hr class="soft-hr">
+
+              <div class="quick-grid">
+                <div class="qitem">
+                  <div class="qlabel">អត្តលេខ</div>
+                  <div class="qvalue" id="empId">—</div>
+                </div>
+                <div class="qitem">
+                  <div class="qlabel">ភេទ</div>
+                  <div class="qvalue" id="empGender">—</div>
+                </div>
+                <div class="qitem">
+                  <div class="qlabel">ថ្ងៃកំណើត</div>
+                  <div class="qvalue" id="empDob">—</div>
+                </div>
+                <div class="qitem">
+                  <div class="qlabel">ថ្ងៃចូលទ័ព</div>
+                  <div class="qvalue" id="empJoin">—</div>
+                </div>
+              </div>
+
+              <div class="mt-3">
+                <button class="btn btn-gradient w-100" id="printBtn">
+                  <i class="bi bi-printer me-2"></i>បោះពុម្ព / Print
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-7">
+          <div class="glass-panel">
+            <h5 class="section-title">
+              <i class="bi bi-card-list me-2"></i>ព័ត៌មានលម្អិត
+            </h5>
+
+            <div id="detailsEmpty" class="empty-state small">
+              <div class="empty-emoji">📄</div>
+              <div class="fw-semibold">មិនទាន់មានទិន្នន័យបង្ហាញ</div>
+              <div class="opacity-75">ជ្រើសរើសមនុស្សពីលទ្ធផលស្វែងរក</div>
+            </div>
+
+            <div id="details" class="d-none">
+              <div class="table-responsive">
+                <table class="table table-borderless align-middle mb-0">
+                  <tbody id="detailsBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <footer class="mt-5 text-center small opacity-75">
+        © <span id="year"></span> Employee Search System • Built with ❤️ in Khmer UI
+      </footer>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+``
