@@ -148,6 +148,7 @@ app.get("/api/employee", (req, res) => {
   res.json({ ok: true, employee: safe });
 });
 
-app.listen(PORT, "10.201.1.185", () => {
-  console.log(`✅ Server running at http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✅ Server running on port ${PORT}`);
+
 });
